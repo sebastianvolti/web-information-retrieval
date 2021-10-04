@@ -1,0 +1,231 @@
+body {
+  background-color: #fff;
+  color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1em;
+  font-weight: normal;
+  line-height: 1.5;
+  margin: 0;
+} 
+body.fondo-gris {
+  background-color: #f9f9f9;
+}
+footer,
+abbr[title] {
+  border-bottom: none !important;
+  cursor: inherit !important;
+  text-decoration: none !important;
+}
+header,
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 12px;
+  padding-right: 12px;
+  max-width: 1104px;
+}
+main {
+  display: block;
+}
+a {
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+a:active,
+a:hover {
+  outline-width: 0;
+}
+strong {
+  font-weight: bolder;
+}
+.strong {
+  font-weight: bolder;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+a {
+  color: #0060a3;
+  text-decoration: underline;
+}
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+h1,
+h2,
+h3 {
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.1;
+}
+h1 {
+  font-size: 2.5rem;  
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.75rem;
+}
+p {
+  margin-bottom: 1rem;
+}
+.Page-title {
+  font-size: 2.5rem;
+  margin-bottom: 2.5rem;
+  margin-top: 1rem;
+}
+
+.app-frame {
+  margin: 0;
+  padding: 30px;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  background:white ;
+}
+
+.vaccinations-actions {
+  margin: 0;
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+  background: #00417046;
+  padding: 10px;
+  width: calc(100% - 80px);
+}
+
+.vaccinations-actions button {
+  background: white;
+  min-width: 100px;
+  height: 30px;
+  margin: 5px;
+  border-style: none;
+  border-radius: 3px;
+  font-weight: bolder;
+}
+
+.vaccinations-actions button:hover {
+  background: #F0F0F0;
+  border-style: solid;
+}
+
+.vaccinations-list .vaccinations-list-item {
+  width: 100%;
+  background: #FFF; 
+  transition: 500ms;
+  height: 40px;
+}
+
+.vaccinations-list .vaccinations-list-item:nth-child(even) {
+  background: #EEE;  
+}
+
+.vaccinations-list .vaccinations-list-item:hover {
+  background: #84adad3a;
+  border: 1px solid;
+} 
+
+.vaccinations-list-item .field {
+  width: 160px;
+  margin: 1px;
+  padding: 4px;
+  overflow: hidden;
+  display: inline-block;
+  line-height: 40px;
+}
+.vaccinations-list-item .field:first-child {
+  width: 25%;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.vaccinations-list-item .field {
+  width: 25%;
+  margin: 0;
+  box-sizing: border-box;  
+}
+
+
+.vaccinations-list-item .field:first-child > a {
+  color: #222;
+  text-decoration: none;
+  font-weight: bolder;
+}
+
+.vaccinations-list-item .field a {
+  color: #666;
+  text-decoration: none;
+  
+}
+
+
+.app-frame form {
+  width: 100%;
+  background: rgba(255,255,255,0.5);
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.app-frame form label {
+  width: 100%;
+  display: inline-block;
+  margin-top: 10px;
+  color: rgba(0,0,0,0.7);
+  font-size: 12px;
+}
+
+.app-frame form input {
+  font-size: 18px;
+  font-style: bolder;
+}
+
+.app-header {
+  border: 0;
+  border-bottom: 1px;
+  border-style: solid;
+  border-color: #0060a3;
+}
+
+.app-header h1 {
+  color: #0060a3;
+}
+
+.app-subh {
+  border-color: #0060a3;
+}
+
+.app-subh h3 {
+  color: #0060a3;
+}
+
+
+.app-frame h2 {
+  font-weight: lighter;
+  font-size: 1.3em;
+}
+
+img {
+  border-radius: 4px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  overflow: hidden;
+  height: 300px;
+  margin: 0 auto;
+  display: block;
+}

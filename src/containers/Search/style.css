@@ -1,0 +1,29 @@
+.reservation-form-layout{
+  padding: 30px;
+}
+
+.reservation-form-title{
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.reservation-input-text{
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.reservation-input-moneda{
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+.reservation-form-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 450px;
+}
+
+.btn-confirmar-solicitud{
+  width:100px;
+}
