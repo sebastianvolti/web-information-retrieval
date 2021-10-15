@@ -7,6 +7,7 @@ export function NewSearch(params) {
       baseURL: "https://api.mercadolibre.com",
       params: params
   };
+  console.log(request);
   return axios(request);
 }
 
