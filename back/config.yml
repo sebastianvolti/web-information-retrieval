@@ -1,0 +1,6 @@
+elastic:
+  url : http://localhost:9200
+  
+
+meli:
+  url : https://api.mercadolibre.com/sites/MLU/search
