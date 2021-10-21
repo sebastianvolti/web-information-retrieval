@@ -43,7 +43,7 @@ def generateElement(object):
     return res
 
 def setProperty(property):
-    res = lib.post("/"+str(property["price"])+"/_doc?pretty",property)
+    res = lib.post("/"+str(property["price"])+"/_doc?pretty",json.dumps(property))
     print(res.json())
     return
 
@@ -73,16 +73,11 @@ def main(params):
         response = requests.get(baseURL+url+params+'&offset='+str(iter))
         object = json.loads(response.text)
         for item in object['results']:
-            imprimir = generateElement(item)
-            print(imprimir)
-            setProperty(imprimir)
+            element = generateElement(item)
+            setProperty(element)
             break
         iter = iter + 50
-        iter = max
-    print("****************************")
-    res = getProperty(imprimir["price"])
-    print(res)
-    print("****************************")
+    print('Fin del Proceso')
     
         
 
