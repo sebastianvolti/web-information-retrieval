@@ -11,11 +11,15 @@ def generateElement(object):
     baths = None
     mode = None
     mts = None
+    rooms = 0
     for atts in object['attributes']:
+        price = object['price']
         if atts['id'] == 'COVERED_AREA':
             mts = atts['value_struct']['number']
         if atts['id'] == 'FULL_BATHROOMS':
             baths = atts['value_name']
+        if atts['id'] == 'ROOMS':
+            rooms = atts['value_name']
         if atts['name'] == 'Operación':
             for iter in atts['values']:
                 if iter['id'] == '242073':
@@ -29,28 +33,35 @@ def generateElement(object):
             mode = 'ALQ'
         else:
             mode = 'VEN'
+            
+    if mode == 'VEN':
+        price = (price * 44)
     res = {
         'title': object['title'],
         'baths': baths,
         'mts': mts,
-        'price': object['price'],
+        'price': price,
         'currency' : object['currency_id'],
         'city': object['address']['state_name'],
         'neighbourhood': object['address']['city_name'],
         'mode': mode,
+        'rooms': rooms,
         'link' : object['permalink']
     }
     return res
 
 def setProperty(property):
-    res = lib.post("/"+str(property["price"])+"/_doc?pretty",json.dumps(property))
+    rango = property['price'] - (property['price'] % 1000)
+    url = property['mode']+'-'+str(property['neighbourhood'])+'-'+str(rango)
+    url = str(url).lower()
+    # Guardar por rango
+    res = lib.post("/"+str(url)+"/_doc?pretty",json.dumps(property))
     print(res.json())
     return
 
 def getProperty(price):
     res=lib.get("/"+str(price)+"/_search?pretty")
     ts = res.json()['hits']['hits'][0]
-    print(ts)
     return ts
 
 
@@ -75,8 +86,7 @@ def main(params):
         for item in object['results']:
             element = generateElement(item)
             setProperty(element)
-            break
-        iter = iter + 50
+        iter = iter + 50 
     print('Fin del Proceso')
     
         
