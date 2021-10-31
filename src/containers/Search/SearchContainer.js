@@ -9,7 +9,6 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 import { toast } from 'react-toastify';
-import SelectorDepartamento from './../../components/composite/SelectorDepartamento';
 import Table from './../../components/commons/Table';
 import { NewSearch } from './../../services/search.js';
 
@@ -133,14 +132,6 @@ function SearchContainer({ agendas, update }) {
               </Select>
             </FormControl>
           </Grid>
-          {/* <Grid item md={4} sm={12}>
-            <SelectorDepartamento
-              departamento={departamento}
-              setDepartamento={setDepartamento}
-            />
-          </Grid> */}
-        </Grid>
-        <Grid container spacing={2}>
           <Grid item md={2} sm={12}>
             <FormControl
               className='reservation-input-operation'
@@ -156,44 +147,12 @@ function SearchContainer({ agendas, update }) {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item md={2} sm={12}>
-            <FormControl
-              className='reservation-input-dormitorios'
-              style={{ width: '10rem' }}
-            >
-              <InputLabel htmlFor='reservation-form-dormitorios'>
-                Dormitorios
-              </InputLabel>
-              <Select
-                value={bedrooms}
-                onChange={(event) => setBathooms(event.target.value)}
-              >
-                <MenuItem value={null}>-</MenuItem>
-                <MenuItem value={'[0-0]'}>Monoambiente</MenuItem>
-                <MenuItem value={'[1-1]'}>1 Dormitorio</MenuItem>
-                <MenuItem value={'[2-2]'}>2 Dormitorios</MenuItem>
-                <MenuItem value={'[3-3]'}>3 Dormitorios</MenuItem>
-                <MenuItem value={'[4-*]'}>4 o más</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item md={2} sm={12}>
-            <FormControl
-              className='reservation-input-baños'
-              style={{ width: '10rem' }}
-            >
-              <InputLabel htmlFor='reservation-form-baños'>
-                Cantidad de baños
-              </InputLabel>
-              <Select value={bathrooms} onChange={handleBedroomsChange}>
-                <MenuItem value={null}>-</MenuItem>
-                <MenuItem value={'1'}>1</MenuItem>
-                <MenuItem value={'2'}>2</MenuItem>
-                <MenuItem value={'3+'}>3 o más</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
         </Grid>
+
+        <br></br>
+        <div className='reservation-form-subtitle'>
+          Ordenar por:
+        </div>
         <Grid container spacing={2}>
           <Grid item md={3} sm={12}>
             <FormControlLabel
