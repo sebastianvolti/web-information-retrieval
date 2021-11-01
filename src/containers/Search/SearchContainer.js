@@ -13,6 +13,7 @@ import Table from './../../components/commons/Table';
 import { NewSearch } from './../../services/search.js';
 
 import './style.css';
+import { LensTwoTone } from '@material-ui/icons';
 
 function SearchContainer({ agendas, update }) {
   const [data, setData] = useState([{}]);
@@ -45,6 +46,8 @@ function SearchContainer({ agendas, update }) {
   };
 
   function buildData(buildData) {
+    console.log("buildData");
+    console.log(buildData);
     let items = [];
     buildData.results.forEach((res) => {
       const item = {
@@ -59,10 +62,28 @@ function SearchContainer({ agendas, update }) {
     return items;
   }
 
-  //TODO armar lógica que soporte rangos por encima y debajo del precio indicado
+  //TODO armé super plancha esta función para probar nomas
   function buildPrice(budget) {
-    let price = budget * 0.9 + '-' + budget;
-    return price;
+    let range1 = budget - (budget % 1000);
+    let range2 = range1 - 1000;
+    let range3 = range2 - 1000;
+
+    let range_str1 = "";
+    let range_str2 = "";
+    let range_str3 = "";
+
+    if (opeation = "242073") {
+      range_str1 = "alq-" + range1;
+      range_str2 = "alq-" + range2;
+      range_str3 = "alq-" + range3;
+    }
+    else {
+      range_str1 = "ven-" + range1;
+      range_str2 = "ven-" + range2;
+      range_str3 = "ven-" + range3;
+    }
+
+    return [range_str1, range_str2, range_str3];
   }
 
   const hanldeConfirmarClick = (event) => {
@@ -70,31 +91,38 @@ function SearchContainer({ agendas, update }) {
     if (currency === 'usd') {
       price = price * 44;
     }
-
-    const configParams = {
-      price: buildPrice(price),
-      q: 'apartamento',
-      city: departamento,
-      sort: 'price_desc',
-      BEDROOMS: bedrooms === '-' ? undefined : bedrooms,
-      BATHROOMS: bathrooms || '0',
-      OPERATION: operation,
+    const ind_price = buildPrice(price, operation);
+    let body = {
+        "sort" : [
+            { }
+        ]
     };
 
-    console.log('configParams');
-    console.log(configParams);
+    if (filter.size) {
+      body["sort"]["mts"] = "desc";
+    }
 
-    const params = {};
-    Object.entries(configParams).forEach(([key, value]) => {
-      if (key && value) {
-        params[key] = value;
-      }
-    });
+    if (filter.numberOfBedrooms) {
+      body["sort"]["rooms"] = "desc";
+    }
 
-    console.log('params');
-    console.log(params);
+    if (filter.numberOfBathrooms) {
+      body["sort"]["toilets"] = "desc";
+    }
 
-    NewSearch(params)
+    /*
+    for test
+    const body = {
+        "sort" : [
+            { "mts" : "desc" }
+        ]
+    };
+
+    const url_params = "alq-pocitos-21000";
+    */
+
+    ind_price.forEach((ind) => {
+      NewSearch(ind, body)
       .then((response) => {
         var actualData = buildData(response.data);
         setData(actualData);
@@ -104,6 +132,9 @@ function SearchContainer({ agendas, update }) {
         console.log(error);
         toast.error('No hay resultados disponibles.');
       });
+    });
+
+
   };
 
   return (

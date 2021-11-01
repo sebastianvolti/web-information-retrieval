@@ -1,11 +1,16 @@
 import axios from "axios";
 
-export function NewSearch(params) {
+export function NewSearch(url_params, body) {
   const request = {
-      url: "/sites/MLU/search",
-      method: "get",
-      baseURL: "https://api.mercadolibre.com",
-      params: params
+      url: url_params,
+      method: "post",
+      baseURL: "http://localhost:9200",
+      body: body,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
   };
   console.log(request);
   return axios(request);
