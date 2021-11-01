@@ -52,7 +52,8 @@ def generateElement(object):
 
 def setProperty(property):
     rango = property['price'] - (property['price'] % 1000)
-    url = property['mode']+'-'+str(property['neighbourhood'])+'-'+str(rango)
+    #url = property['mode']+'-'+str(property['neighbourhood'])+'-'+str(rango)
+    url = property['mode']+'-'+'-'+str(rango)
     url = str(url).lower()
     # Guardar por rango
     res = lib.post("/"+str(url)+"/_doc?pretty",json.dumps(property))
