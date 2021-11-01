@@ -58,3 +58,8 @@ pom.xml.releaseBackup
 pom.xml.tag
 .git
 node_modules
+
+
+#Backend Python
+back/__pycache__/
+back/__pycache__/*
