@@ -19,7 +19,7 @@ def generateElement(object):
         if atts['id'] == 'FULL_BATHROOMS':
             baths = atts['value_name']
         if atts['id'] == 'ROOMS':
-            rooms = atts['value_name']
+            rooms = int(atts['value_name'])
         if atts['name'] == 'Operación':
             for iter in atts['values']:
                 if iter['id'] == '242073':
