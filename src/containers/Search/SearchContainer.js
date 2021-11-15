@@ -48,12 +48,14 @@ function SearchContainer({ agendas, update }) {
 
   function buildData(buildData) {
     let items = [];
-    buildData.results.forEach((res) => {
+    console.log(buildData)
+    buildData.hits.hits.forEach((res) => {
+      
       const item = {
-        id: res.id,
-        title: res.title,
-        price: res.price,
-        permalink: res.permalink,
+        id: res._source.baths,
+        title: res._source.title,
+        price: res._source.price,
+        permalink: res._source.link,
       };
       items.push(item);
     });
@@ -67,36 +69,32 @@ function SearchContainer({ agendas, update }) {
     return price;
   }
 
-  const hanldeConfirmarClick = (event) => {
-    let price = budget;
+  const hanldeConfirmarClick = (event) => {let price = budget;
     if (currency === 'usd') {
       price = price * 44;
     }
-
-    const configParams = {
-      price: buildPrice(price),
-      q: 'apartamento',
-      city: departamento,
-      sort: 'price_desc',
-      BEDROOMS: bedrooms === '-' ? undefined : bedrooms,
-      BATHROOMS: bathrooms || '0',
-      OPERATION: operation,
+    const ind_price = buildPrice(price, operation);
+    let body = {
+        "sort" : [
+        ]
     };
 
-    console.log('configParams');
-    console.log(configParams);
-
-    const params = {};
-    Object.entries(configParams).forEach(([key, value]) => {
-      if (key && value) {
-        params[key] = value;
+   
+    
+    showFilters.forEach(elem => {
+      if (elem === FILTERS_ID.bathrooms){
+        body["sort"].push({"baths" : "desc"});
+      }else if (elem === FILTERS_ID.rooms){
+        body["sort"].push({"rooms" : "desc"});
+      }else{
+        body["sort"].push({"mts" : "desc"});
       }
-    });
+    })
 
-    console.log('params');
-    console.log(params);
+    const url_params = "alq-25000";
 
-    NewSearch(params)
+
+      NewSearch(url_params, body)
       .then((response) => {
         var actualData = buildData(response.data);
         setData(actualData);
@@ -106,7 +104,7 @@ function SearchContainer({ agendas, update }) {
         console.log(error);
         toast.error('No hay resultados disponibles.');
       });
-  };
+};
 
   const addFilter = (filterId) => {
     const newFilters = [...showFilters];

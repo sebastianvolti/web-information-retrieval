@@ -8,9 +8,9 @@ config = config.load()
 lib.connect(config)
 
 def generateElement(object):
-    baths = None
+    baths = 0
     mode = None
-    mts = None
+    mts = 0
     rooms = 0
     for atts in object['attributes']:
         price = object['price']
@@ -38,14 +38,14 @@ def generateElement(object):
         price = (price * 44)
     res = {
         'title': object['title'],
-        'baths': baths,
+        'baths': int(baths),
         'mts': mts,
         'price': price,
         'currency' : object['currency_id'],
         'city': object['address']['state_name'],
         'neighbourhood': object['address']['city_name'],
         'mode': mode,
-        'rooms': rooms,
+        'rooms': int(rooms),
         'link' : object['permalink']
     }
     return res
