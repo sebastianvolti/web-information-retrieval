@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
+import { TextField, Chip } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
+import { AddCircle, Filter1, Filter2, Filter3 } from '@material-ui/icons';
 import { toast } from 'react-toastify';
 import Table from './../../components/commons/Table';
 import { NewSearch } from './../../services/search.js';
 
 import './style.css';
 
+const FILTERS_ID = {
+  bathrooms: '1',
+  rooms: '2',
+  size: '3',
+};
 function SearchContainer({ agendas, update }) {
+  const [showFilters, setShowFilters] = useState([]);
   const [data, setData] = useState([{}]);
   const [budget, setBudget] = useState(20000);
   const [currency, setCurrency] = useState('pesos');
@@ -22,11 +29,6 @@ function SearchContainer({ agendas, update }) {
   const [bedrooms, setBedrooms] = useState(null);
   const [bathrooms, setBathooms] = useState(null);
   const [departamento, setDepartamento] = useState('TUxVQ1BBUmU3Y2Nj');
-  const [filters, setFilters] = useState({
-    numberOfBathrooms: null,
-    numberOfBedrooms: null,
-    size: null,
-  });
 
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
@@ -106,6 +108,83 @@ function SearchContainer({ agendas, update }) {
       });
   };
 
+  const addFilter = (filterId) => {
+    const newFilters = [...showFilters];
+    newFilters.push(filterId);
+    setShowFilters(newFilters);
+  };
+
+  const deleteFilter = (filterId) => {
+    const newFilters = showFilters.filter((filter) => filter != filterId);
+    setShowFilters(newFilters);
+  };
+
+  const getChip = (filterId, index) => {
+    let filterIndex = <Filter1 color='primary' />;
+    if (index === 1) {
+      filterIndex = <Filter2 color='primary' />;
+    } else if (index === 2) {
+      filterIndex = <Filter3 color='primary' />;
+    }
+    if (filterId === FILTERS_ID.bathrooms) {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: '1rem',
+          }}
+        >
+          {filterIndex}
+          <Chip
+            label='Cantidad de baños'
+            color='primary'
+            variant='outlined'
+            onDelete={() => deleteFilter(FILTERS_ID.bathrooms)}
+            style={{ marginLeft: '1rem' }}
+          />
+        </div>
+      );
+    } else if (filterId === FILTERS_ID.rooms) {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: '1rem',
+          }}
+        >
+          {filterIndex}
+          <Chip
+            label='Cantidad de habitaciones'
+            color='primary'
+            variant='outlined'
+            onDelete={() => deleteFilter(FILTERS_ID.rooms)}
+            style={{ marginLeft: '1rem' }}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: '1rem',
+          }}
+        >
+          {filterIndex}
+          <Chip
+            label='Metraje'
+            color='primary'
+            variant='outlined'
+            onDelete={() => deleteFilter(FILTERS_ID.size)}
+            style={{ marginLeft: '1rem' }}
+          />
+        </div>
+      );
+    }
+  };
   return (
     <div className='reservation-form-layout'>
       <div className='reservation-form-title app-subh'>
@@ -150,63 +229,65 @@ function SearchContainer({ agendas, update }) {
         </Grid>
 
         <br></br>
-        <div className='reservation-form-subtitle'>
+
+        <div
+          className='reservation-form-subtitle'
+          style={{ marginBottom: '1rem' }}
+        >
           Ordenar por:
         </div>
-        <Grid container spacing={2}>
-          <Grid item md={3} sm={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color='primary'
-                  checked={filters.numberOfBathrooms}
-                  onChange={(event) =>
-                    setFilters({
-                      ...filters,
-                      numberOfBathrooms: event.target.checked,
-                    })
-                  }
-                  inputProps={{ 'aria-label': 'controlled' }}
-                />
-              }
-              label='Cantidad de baños'
-            />
-          </Grid>
-          <Grid item md={3} sm={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color='primary'
-                  checked={filters.numberOfBedrooms}
-                  onChange={(event) =>
-                    setFilters({
-                      ...filters,
-                      numberOfBedrooms: event.target.checked,
-                    })
-                  }
-                  inputProps={{ 'aria-label': 'controlled' }}
-                />
-              }
-              label='Cantidad de habitaciones'
-            />
-          </Grid>
-          <Grid item md={3} sm={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color='primary'
-                  checked={filters.size}
-                  onChange={(event) =>
-                    setFilters({
-                      ...filters,
-                      size: event.target.checked,
-                    })
-                  }
-                  inputProps={{ 'aria-label': 'controlled' }}
-                />
-              }
-              label='Metraje del apartamento'
-            />
+        <Grid item spacing={2}>
+          {showFilters.length > 0 && (
+            <Grid item md={5} sm={12}>
+              {showFilters.map((filterId, i) => {
+                return getChip(filterId, i);
+              })}
+            </Grid>
+          )}
+          <Grid
+            item
+            md={6}
+            sm={12}
+            style={{
+              display: 'flex',
+            }}
+          >
+            {!showFilters.includes(FILTERS_ID.bathrooms) && (
+              <Button
+                variant='contained'
+                color='primary'
+                endIcon={<AddCircle />}
+                onClick={() => addFilter(FILTERS_ID.bathrooms)}
+                style={{
+                  marginRight: '1rem',
+                }}
+              >
+                Cantidad de baños
+              </Button>
+            )}
+            {!showFilters.includes(FILTERS_ID.rooms) && (
+              <Button
+                variant='contained'
+                color='primary'
+                endIcon={<AddCircle />}
+                onClick={() => addFilter(FILTERS_ID.rooms)}
+                style={{
+                  marginRight: '1rem',
+                }}
+              >
+                Cantidad de habitaciones
+              </Button>
+            )}
+            {!showFilters.includes(FILTERS_ID.size) && (
+              <Button
+                variant='contained'
+                color='primary'
+                endIcon={<AddCircle />}
+                onClick={() => addFilter(FILTERS_ID.size)}
+              >
+                Metraje
+              </Button>
+            )}
           </Grid>
         </Grid>
         <br></br>
