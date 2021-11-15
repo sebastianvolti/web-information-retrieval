@@ -52,9 +52,10 @@ function SearchContainer({ agendas, update }) {
     buildData.hits.hits.forEach((res) => {
       
       const item = {
-        id: res._source.baths,
-        title: res._source.title,
-        price: res._source.price,
+        rooms: res._source.rooms,
+        mts: res._source.mts+"mts",
+        baths: res._source.baths,
+        price: res._source.price+"$",
         permalink: res._source.link,
       };
       items.push(item);
@@ -65,8 +66,8 @@ function SearchContainer({ agendas, update }) {
 
   //TODO armar lógica que soporte rangos por encima y debajo del precio indicado
   function buildPrice(budget) {
-    let price = budget * 0.9 + '-' + budget;
-    return price;
+    let price =  (budget - (budget%1000)) -1000;
+    return operation+"-"+price;
   }
 
   const hanldeConfirmarClick = (event) => {let price = budget;
@@ -91,20 +92,19 @@ function SearchContainer({ agendas, update }) {
       }
     })
 
-    const url_params = "alq-25000";
+    
 
-
-      NewSearch(url_params, body)
-      .then((response) => {
-        var actualData = buildData(response.data);
-        setData(actualData);
-        toast.success('Aquí tus resultados!');
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error('No hay resultados disponibles.');
-      });
-};
+        NewSearch(ind_price, body)
+        .then((response) => {
+          var actualData = buildData(response.data);
+          setData(actualData);
+          toast.success('Aquí tus resultados!');
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error('No hay resultados disponibles.');
+        });
+  };
 
   const addFilter = (filterId) => {
     const newFilters = [...showFilters];
@@ -188,6 +188,8 @@ function SearchContainer({ agendas, update }) {
       <div className='reservation-form-title app-subh'>
         <h3>Búsqueda de inmueble</h3>
       </div>
+      <br></br>
+      <br></br>
       <div className='reservation-form-body'>
         <Grid container spacing={1}>
           <Grid item md={3} sm={12}>
@@ -219,8 +221,8 @@ function SearchContainer({ agendas, update }) {
               </InputLabel>
               <Select value={operation} onChange={handleOperationChange}>
                 <option aria-label='None' value='' />
-                <MenuItem value={'242073'}>Alquiler</MenuItem>
-                <MenuItem value={'242075'}>Venta</MenuItem>
+                <MenuItem value={'alq'}>Alquiler</MenuItem>
+                <MenuItem value={'ven'}>Venta</MenuItem>
               </Select>
             </FormControl>
           </Grid>

@@ -23,8 +23,6 @@ function NavBar({ history }) {
       <div>
         <h2>Prototipo proyecto webir</h2>
       </div>
-      <Button onClick={handleInit}>Pagina Principal</Button>
-      <Button onClick={handleMonitor}>Monitor</Button>
     </nav>
   );
 

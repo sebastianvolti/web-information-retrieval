@@ -10,8 +10,6 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 const columns = [
-  { id: 'id', label: 'Id', minWidth: 50, maxWidth: 50},
-  { id: 'title', label: 'Descripción', minWidth: 50, maxWidth: 50},
   {
     id: 'price',
     label: 'Precio',
@@ -20,6 +18,9 @@ const columns = [
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
+  { id: 'baths', label: '#Baños', minWidth: 50, maxWidth: 50},
+  { id: 'mts', label: 'Metraje', minWidth: 50, maxWidth: 50},
+  { id: 'rooms', label: '#Habitaciones', minWidth: 50, maxWidth: 50},
   { id: 'permalink', label: 'Link', minWidth: 50, maxWidth: 50},
 ];
 
